@@ -1,6 +1,6 @@
 import express from "express";
 import User from "../models/User";
-
+import 'dotenv/config'
 import Task from "../models/Task";
 import Submission from "../models/Submission";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
@@ -9,16 +9,14 @@ const router = express.Router();
 import { S3Client } from "@aws-sdk/client-s3";
 
 import verifyTransaction from "../utils/verifyTransaction";
-import { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY, BUCKET_NAME } from "../utils/awsCredentials";
-
 
 
 const s3Client = new S3Client({
   credentials: {
-    accessKeyId: AWS_ACCESS_KEY_ID as  string,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   },
-  region: AWS_REGION,
+  region: process.env.AWS_REGION,
 });
 router.get("/presignedUrl", async (req, res): Promise<any> => {
   const user = await User.findOne({ address: req.query.address });
@@ -27,10 +25,10 @@ router.get("/presignedUrl", async (req, res): Promise<any> => {
   }
 
   const ex = req.query.fileType as string;
-  console.log(ex);
-  const Key = `clickmint/${user._id.toString()}/${Math.random()}/image.${ex}`;
+  
+  const Key = `clickmint/${req.query.address}/${Math.random()}/image.${ex}`;
   const params = {
-    Bucket: BUCKET_NAME,
+    Bucket: process.env.BUCKET_NAME,
     Key,
     ContentType: ex,
     Expires: 3600, // URL validity in seconds
@@ -41,7 +39,7 @@ router.get("/presignedUrl", async (req, res): Promise<any> => {
     //const command = new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: Key });
     //const uploadURL = await getSignedUrl(s3, command, { expiresIn: 3600});
     const { url, fields } = await createPresignedPost(s3Client, {
-      Bucket: BUCKET_NAME,
+      Bucket: process.env.BUCKET_NAME as string,
       Key,
       Conditions: [
         ["content-length-range", 0, 5 * 1024 * 1024], // 5 MB max

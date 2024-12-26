@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import 'dotenv/config' ;
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import workerRoutes from './routes/worker';
@@ -10,7 +10,7 @@ import verifyToken from './middleware/verifyToken';
 
 
 const app = express();
-dotenv.config();
+
 
 app.use(cors());
 app.use(express.json());
@@ -39,11 +39,11 @@ app.use('/v1/user',verifyToken('user'),userRoutes);
 app.use('/v1/worker',verifyToken('worker'),workerRoutes);
 
 mongoose.connect(process.env.mongo_URL || "ts")
-// .then(()=>{
-//    app.listen(3500,()=>{
-//     console.log("server is running on port 3500");
-//    })
-// })
+.then(()=>{
+   app.listen(3500,()=>{
+    console.log("server is running on port 3500");
+   })
+})
 .catch((err)=>{
   console.log(err);
 })
