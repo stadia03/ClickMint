@@ -16,31 +16,37 @@ interface Task {
   submission: string;
 }
 
-
-
-export default  function Home  ()  {
+export default function Home() {
   const [task, setTask] = useState<Task | null>(null);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [taskLoading, settaskLoading] = useState(false);
   const [message, setMessage] = useState<string>("");
 
   // Fetch Task on Component Mount
   const fetchTask = async () => {
-   // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`);
+    // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`,{
-        headers: {
-          Authorization : localStorage.getItem("token")},
-          params : {
-            address : localStorage.getItem("workerAddress")
-          }
-      });
+      settaskLoading(true);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+          params: {
+            address: localStorage.getItem("workerAddress"),
+          },
+        }
+      );
       setTask(response.data);
-   //   console.log(response.data);
+      settaskLoading(false);
+      //   console.log(response.data);
     } catch (error) {
       console.error("Error fetching task:", error);
       setMessage("Failed to load task.");
       setTask(null);
+      settaskLoading(false);
     }
   };
 
@@ -63,14 +69,21 @@ export default  function Home  ()  {
         votedOption: selectedOption,
       };
 
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/submit`, submissionData,{
-        headers: {
-        Authorization : localStorage.getItem("token")
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/v1/worker/submit`,
+        submissionData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
-      });
+      );
       setMessage("Task submitted successfully!");
       fetchTask();
       setSelectedOption(null);
+      setTimeout(() => {
+        setMessage("");
+      }, 1000);
     } catch (error) {
       console.error("Submission error:", error);
       setMessage("Failed to submit task.");
@@ -85,53 +98,65 @@ export default  function Home  ()  {
       <div className="flex flex-col items-center justify-center py-14 bg-gray-900 text-white">
         <div className="w-full max-w-4xl p-6 bg-gray-800 rounded-lg shadow-md">
           {/* Task Title or No Task Message */}
-          <h1 className="text-2xl font-bold mb-4 text-center">
-            {task ? task.title : "No Task Available"}
-          </h1>
-
-          {task ? (
-            // Render task options if task exists
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              {task.options.map((url, index) => (
-                <div
-                  key={index}
-                  className={`p-1 rounded-lg cursor-pointer ${
-                    selectedOption === index
-                      ? "ring-4 ring-purple-500"
-                      : "ring-2 ring-gray-700"
-                  }`}
-                  onClick={() => setSelectedOption(index)}
-                >
-                  <img
-                    src={url}
-                    alt={`Option ${index + 1}`}
-                    className="w-full h-40 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
+          {taskLoading ? (
+            <div className="mt-6 w-full py-3   flex justify-center">
+              <img
+                src="/assets/loading.svg"
+                alt="Loading..."
+                // className="w-5 h-5 animate-spin mr-2" // Added mr-2 for spacing if needed
+                style={{ width: "30px", height: "30px" }} // Ensure consistent size
+              />
             </div>
           ) : (
-            // Show this if no task is available
-            <p className="text-lg text-center text-gray-400">
-              Please check back later for new tasks.
-            </p>
-          )}
+            <div>
+              <h1 className="text-2xl font-bold mb-4 text-center">
+                {task ? task.title : "No Task Available"}
+              </h1>
 
-          {/* Submit Button */}
-          {task && (
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className={`w-full py-2 rounded-lg font-bold text-white ${
-                loading
-                  ? "bg-purple-600 cursor-not-allowed"
-                  : "bg-purple-500 hover:bg-purple-600"
-              }`}
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
-          )}
+              {task ? (
+                // Render task options if task exists
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  {task.options.map((url, index) => (
+                    <div
+                      key={index}
+                      className={`p-1 rounded-lg cursor-pointer ${
+                        selectedOption === index
+                          ? "ring-4 ring-purple-500"
+                          : "ring-2 ring-gray-700"
+                      }`}
+                      onClick={() => setSelectedOption(index)}
+                    >
+                      <img
+                        src={url}
+                        alt={`Option ${index + 1}`}
+                        className="w-full h-40 object-cover rounded-lg"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                // Show this if no task is available
+                <p className="text-lg text-center text-gray-400">
+                  Please check back later for new tasks.
+                </p>
+              )}
 
+              {/* Submit Button */}
+              {task && (
+                <button
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className={`w-full py-2 rounded-lg font-bold text-white ${
+                    loading
+                      ? "bg-purple-600 cursor-not-allowed"
+                      : "bg-purple-500 hover:bg-purple-600"
+                  }`}
+                >
+                  {loading ? "Submitting..." : "Submit"}
+                </button>
+              )}
+            </div>
+          )}
           {/* Message */}
           {message && (
             <div className="mt-4 text-center text-lg font-semibold text-green-400">
@@ -150,4 +175,4 @@ export default  function Home  ()  {
       </div>
     </div>
   );
-};
+}
