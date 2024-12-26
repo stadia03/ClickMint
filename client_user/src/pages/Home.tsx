@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import Upload from "../components/Upload";
 import Navbar from "../components/Navbar";
 import axios, { AxiosError } from "axios";
-import {
-  ADMIN_WALLET_PUBLICKEY,
-  BACKEND_URL,
-  CHARGE_PER_CLICK,
-} from "../utils";
+
 import { useUserStore } from "../store";
 import {
   Connection,
@@ -68,7 +64,7 @@ const Home: React.FC = () => {
 
 
       const response = await axios.post(
-        `${BACKEND_URL}/v1/user/task`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/user/task`,
         {
           title: (document.getElementById("title") as HTMLInputElement).value,
           address: useUserStore.getState().address,
@@ -85,7 +81,7 @@ const Home: React.FC = () => {
         }
       );
       await axios.get(
-        `${BACKEND_URL}/`,
+        `${import.meta.env.VITE_BACKEND_URL}/`,
        
         {
           params : {signature : transaction_signature},
@@ -121,8 +117,8 @@ const Home: React.FC = () => {
       transaction.add(
         SystemProgram.transfer({
           fromPubkey: publicKey as PublicKey,
-          toPubkey: new PublicKey(ADMIN_WALLET_PUBLICKEY),
-          lamports: total_submissions * CHARGE_PER_CLICK ,
+          toPubkey: new PublicKey(import.meta.env.VITE_ADMIN_WALLET_PUBLICKEY as string),
+          lamports: total_submissions * Number(import.meta.env.VITE_CHARGE_PER_CLICK) ,
         })
       );
       const response = await sendTransaction(transaction, connection);
@@ -166,7 +162,7 @@ const Home: React.FC = () => {
           <div className="text-slate-200 flex justify-center mb-2">
             {total_submissions > 0 ? (
               <p>
-                You will be charged {(total_submissions * CHARGE_PER_CLICK)/LAMPORTS_PER_SOL} SOL +
+                You will be charged {(total_submissions * Number(import.meta.env.VITE_CHARGE_PER_CLICK))/LAMPORTS_PER_SOL} SOL +
                 gas fee.
               </p>
             ) : (

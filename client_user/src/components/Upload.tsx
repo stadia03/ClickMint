@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import { BACKEND_URL, CLOUDFRONT_URL } from "../utils";
+
 import { useUserStore } from "../store";
 
 interface UploadProps {
@@ -23,7 +23,7 @@ const Upload: React.FC<UploadProps> = ({ onUploadComplete }) => {
 
     try {
       // Step 1: Request presigned URL from backend
-      const response = await axios.get(`${BACKEND_URL}/v1/user/presignedUrl`, {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/user/presignedUrl`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -48,7 +48,7 @@ const Upload: React.FC<UploadProps> = ({ onUploadComplete }) => {
       await axios.post(presignedUrl, formData);
 
       // Step 3: Notify parent with the CloudFront URL
-      onUploadComplete(`${CLOUDFRONT_URL}/${response.data.fields["key"]}`);
+      onUploadComplete(`${import.meta.env.VITE_CLOUDFRONT_URL}/${response.data.fields["key"]}`);
     } catch (error) {
       console.error("File upload error:", error);
     }

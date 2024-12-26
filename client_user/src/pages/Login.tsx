@@ -3,8 +3,6 @@ import {WalletMultiButton} from "@solana/wallet-adapter-react-ui";
 import axios from "axios";
 import { useUserStore } from "../store";
 import React from "react";
-import { BACKEND_URL } from "../utils";
-
 
 // import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
@@ -18,7 +16,8 @@ export default  function Login() {
         alert("Please connect your wallet before logging in.");
         return;
       }
-      const res= await axios.post(`${BACKEND_URL}/v1/auth/userSignin`,
+      console.log(import.meta.env.BACKEND_URL);
+      const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/userSignin`,
         {address : publicKey},
         {headers : {"Content-Type" :'application/json'}}
       );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { BACKEND_URL } from "../utils";
+
 import { useUserStore } from "../store";
 
 interface Task {
@@ -28,7 +28,7 @@ const AllTasks: React.FC = () => {
     // Fetch tasks from backend
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/v1/user/taskvotes`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/user/taskvotes`, {
           params: {
             address: useUserStore.getState().address,
           },
