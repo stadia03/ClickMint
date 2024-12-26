@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { BACKEND_URL } from "../utils";
 
 const Withdraw: React.FC = () => {
   const [balance, setBalance] = useState(0);
@@ -11,7 +10,7 @@ const Withdraw: React.FC = () => {
   }, []);
 
   const updateBalance = async () => {
-    const response = await axios.get(`${BACKEND_URL}/v1/worker/balance`, {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/balance`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -19,7 +18,7 @@ const Withdraw: React.FC = () => {
         address: localStorage.getItem("workerAddress"),
       },
     });
-    console.log(response.data.balance);
+   // console.log(response.data.balance);
     setBalance(Number(response.data.balance));
   };
 
@@ -32,7 +31,7 @@ const Withdraw: React.FC = () => {
         return;
       }
       const response = await axios.post(
-        `${BACKEND_URL}/v1/worker/payout`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/worker/payout`,
         {},
         {
           headers: {

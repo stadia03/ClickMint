@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../utils";
 import Navbar from "../components/Navbar";
 
 interface Task {
@@ -27,8 +26,9 @@ export default  function Home  ()  {
 
   // Fetch Task on Component Mount
   const fetchTask = async () => {
+   // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`);
     try {
-      const response = await axios.get(`${BACKEND_URL}/v1/worker/nextTask`,{
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/nextTask`,{
         headers: {
           Authorization : localStorage.getItem("token")},
           params : {
@@ -36,6 +36,7 @@ export default  function Home  ()  {
           }
       });
       setTask(response.data);
+   //   console.log(response.data);
     } catch (error) {
       console.error("Error fetching task:", error);
       setMessage("Failed to load task.");
@@ -62,7 +63,7 @@ export default  function Home  ()  {
         votedOption: selectedOption,
       };
 
-      await axios.post(`${BACKEND_URL}/v1/worker/submit`, submissionData,{
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/v1/worker/submit`, submissionData,{
         headers: {
         Authorization : localStorage.getItem("token")
         }

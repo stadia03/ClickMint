@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useUserStore } from "../store";
-import { VERSION } from "../utils";
 
 
 const Navbar = () => {
@@ -16,7 +15,7 @@ const Navbar = () => {
       <div className="text-4xl font-semibold">
         <span className="text-white">Click</span>
         <span className="text-purple-500">Mint</span>
-        <span className="text-slate-400 text-xl mx-1">V{VERSION}</span>
+        <span className="text-slate-400 text-xl mx-1">V{import.meta.env.VITE_VERSION}</span>
       </div> 
       </div>
     

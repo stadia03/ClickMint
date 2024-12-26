@@ -16,7 +16,8 @@ export default  function Login() {
         alert("Please connect your wallet before logging in.");
         return;
       }
-      const res= await axios.post('http://localhost:3500/v1/auth/workerSignin',
+     // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/workerSignin`);
+      const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/workerSignin`,
         {address : publicKey},
         {headers : {"Content-Type" :'application/json'}}
       );
