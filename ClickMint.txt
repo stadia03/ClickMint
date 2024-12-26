@@ -1,0 +1,75 @@
+ClickMint
+
+FEE 
+for now lets charge .025 per click 
+
+problems in mind:
+
+
+BIGGEST PROBLEMMMM OF THE CENTURY: TRANSACTION VALIDATION HAPPENDS FROM POSTMAN BUT NOT FROM BROWSER..... PLEASE FIX
+
+
+--> (done) check the task status done or not done before WORKER fetches it. 
+
+-->  (done) update task status to done when totalsubmission == total_votes.size()
+
+--> payment - 
+
+--> (done) fetching tasks for user - when user leaves the platform, and logs back in , that task should be continue form their only.  
+
+
+worker
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIweGRhc3VnZnNnZjQzOGdydXlrNDN0cnUiLCJpYXQiOjE3MzMwNjExMDl9.t0cDi-_w90NTx4ugG9_k_RYlHxyRvzEAiZVdZAYjT24
+
+E:\Cohort_3\worker_user\src\pages\Home.tsx
+
+endpoints
+
+WORKER
+get http://localhost:3500/v1/worker/nextTask   ?address=0xdasugfsgf438gruyk43tru
+
+get http://localhost:3500/v1/worker/balance   ?address=0xdasugfsgf438gruyk43tru
+
+post http://localhost:3500/v1/worker/submit   
+{
+"address" : "0xdasugfsgf438gruyk43tru",
+   "taskId" : "675f03e1b48d911eceeba44e",
+  "votedOption" : 1
+}
+
+post http://localhost:3500/v1/worker/payout  
+{
+"address" : "0xdasugfsgf438gruyk43tru",
+}
+
+USER
+
+get http://localhost:3500/v1/user/presignedUrl   ?address=0xdasugfsgf438gruyk43trUSER & fileType=jpg
+get http://localhost:3500/v1/user/alltask    ?address=0xdasugfsgf438gruyk43trUSER
+
+get http://localhost:3500/v1/user/taskvotes    ?address=2nBYMrnxVAqJ8oyouC6JvfDV1Ujqdierod7tZ8Ve1MjL
+
+post  http://localhost:3500/v1/user/task  
+{
+   "title" : "test 103",
+   "address" : "0xdasugfsgf438gruyk43trUSER",
+   "options" : ["one","two","three","four"],
+   "signature": "0x4r3i8743897545y435",
+   "total_submissions" : 2  
+    
+}
+	
+
+AUTHENTICATION
+
+post http://localhost:3500/v1/auth/userSignin
+{
+"address" : "0xdasugfsgf438gruyk43tru",
+}
+
+post http://localhost:3500/v1/auth/workerSignin
+{
+"address" : "0xdasugfsgf438gruyk43tru",
+}
+
+
