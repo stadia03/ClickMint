@@ -1,4 +1,9 @@
-# ClickMint
+# ClickMint 💲
+
+https://userclickmint.vercel.app/
+
+
+https://workerclickmint.vercel.app/
 
 ClickMint is a decentralized platform designed to connect users and workers in an innovative way. Users can post tasks consisting of clickable options (like images or thumbnails) and pay using Solana. Workers participate by selecting the most clickable option, earning micropayments for each task. The system ensures transparency and fairness through blockchain integration. Workers can withdraw their accumulated earnings directly to their wallets after reaching a withdrawal threshold.
 
@@ -151,25 +156,33 @@ ClickMint/
 
 (Add screenshots in the spaces below):
 
-1. **Task Upload Page**
 
-*(Insert image here)*
+1. **Login Page**
 
-2. **Task Voting Page**
+![image](https://github.com/user-attachments/assets/26480661-85bf-41c1-98d2-a5506b4c0429)
 
-*(Insert image here)*
 
-3. **User Voting Interface**
+2. **Task Upload Page**
 
-*(Insert image here)*
+![image](https://github.com/user-attachments/assets/3b2150ef-af61-4fcf-8d12-aa807f4a872b)
 
-4. **User Withdrawal Page**
 
-*(Insert image here)*
+3. **Task Voting Page**
 
-5. **Login Page**
+![image](https://github.com/user-attachments/assets/5d473c14-cc15-44da-abc6-3a336f3a5d7e)
 
-*(Insert image here)*
+
+4. **Worker Voting Interface**
+
+![image](https://github.com/user-attachments/assets/69eab202-487d-4aa8-a012-bef735767505)
+
+
+5. **Worker Withdrawal Page**
+
+![image](https://github.com/user-attachments/assets/1e96d38a-a732-4db7-9368-d633d7b13a86)
+
+
+
 
 ---
 
