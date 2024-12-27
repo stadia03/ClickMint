@@ -67,3 +67,8 @@ mongoose.connect(process.env.mongo_URL || "ts")
   console.log(err);
 })
 
+export default app;
+
+
+
+
