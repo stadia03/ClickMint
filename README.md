@@ -1,4 +1,4 @@
-# ClickMint 🔥
+# ClickMint 💲
 
 ClickMint is a decentralized platform designed to connect users and workers in an innovative way. Users can post tasks consisting of clickable options (like images or thumbnails) and pay using Solana. Workers participate by selecting the most clickable option, earning micropayments for each task. The system ensures transparency and fairness through blockchain integration. Workers can withdraw their accumulated earnings directly to their wallets after reaching a withdrawal threshold.
 
