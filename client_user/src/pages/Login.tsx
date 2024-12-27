@@ -16,6 +16,7 @@ export default  function Login() {
       setLoading(true);
       if (!publicKey) {
         alert("Please connect your wallet before logging in.");
+        setLoading(false);
         return;
       }
      // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/userSignin`);
@@ -27,6 +28,7 @@ export default  function Login() {
       // console.log(res);
       if(res.status != 201 ){
         alert("Error Logging In");
+        setLoading(false);
         return;
       }
 
