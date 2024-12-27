@@ -17,6 +17,7 @@ export default  function Login() {
       setLoading(true);
       if (!publicKey) {
         alert("Please connect your wallet before logging in.");
+        setLoading(false);
         return;
       }
      // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/workerSignin`);
@@ -28,6 +29,7 @@ export default  function Login() {
       // console.log(res);
       if(res.status != 201 ){
         alert("Error Logging In");
+        setLoading(false);
         return;
       }
 
@@ -52,22 +54,34 @@ export default  function Login() {
     <div className="flex flex-col items-center  ">
       
    
-      <h1 className="text-7xl font-bold text-center mb-6 mt-20 ">
+      <h1 className="text-7xl font-bold text-center mb-3 mt-20 ">
         Welcome To Click<span className="text-purple-500">Mint</span>
       </h1>
 
 
-      <p className="text-lg text-center max-w-xl mb-10">
+      <p className="text-lg text-center max-w-xl ">
         ClickMint connects creators with global workers for crowdsourced
         insights, rewarding contributions with micropayments.
       </p>
 
+      <div onClick={()=>{
+        window.open("https://userclickmint.vercel.app/", "_blank");
+      }} className=" cursor-pointer my-8 bg-purple-500 text-white text-lg py-3 px-10 rounded-full flex items-center justify-center hover:bg-purple-800 ">
+        <p >
+          Switch to Client
+        </p>
+      </div>
       
-      <p className="text-sm text-gray-400 m-4 mt-8">To continue please connect your wallet.</p>
+      <p className="text-sm text-gray-400 my-2">To continue please connect your wallet.</p>
       <div >
       <WalletMultiButton />
       </div>
-      <div className="my-6 bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">
+      <div className="my-4 text-base">
+      <p>
+          Logging as Worker
+        </p>
+      </div>
+      <div className=" bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">
              
       {isLoading ? (
                 <img
