@@ -2,21 +2,23 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import {WalletMultiButton} from "@solana/wallet-adapter-react-ui";
 import axios from "axios";
 import { useUserStore } from "../store";
-import React from "react";
+import React, { useState } from "react";
 
 // import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 
 export default  function Login() {
   const {publicKey} = useWallet();
+  const [isLoading, setLoading] = useState(false);
 
   async function handleLogin(){
     try{
+      setLoading(true);
       if (!publicKey) {
         alert("Please connect your wallet before logging in.");
         return;
       }
-      console.log(import.meta.env.BACKEND_URL);
+     // console.log(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/userSignin`);
       const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/v1/auth/userSignin`,
         {address : publicKey},
         {headers : {"Content-Type" :'application/json'}}
@@ -32,9 +34,10 @@ export default  function Login() {
       localStorage.setItem('userAddress', publicKey?.toBase58() ?? "");
       useUserStore.getState().setAuth(true);
       useUserStore.getState().setUseraddress(publicKey?.toBase58() ?? ""); 
-
+      setLoading(false);
     }catch(err){
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -64,9 +67,22 @@ export default  function Login() {
       <WalletMultiButton />
       </div>
 
-      <div onClick={handleLogin} className="my-6 bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">
-       <img src="./assets/right-arrow.png" className="h-8 "></img>
-      </div>
+      <div className="my-6 bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">
+             
+             {isLoading ? (
+                       <img
+                         src="/assets/loading.svg"
+                         alt="Loading..."
+                         // className="w-5 h-5 animate-spin mr-2" // Added mr-2 for spacing if needed
+                         style={{ width: "30px", height: "30px" }} // Ensure consistent size
+                       />
+                    
+                   ) : (
+                     <div onClick={handleLogin} className="my-6 bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">
+                     <img src="./assets/right-arrow.png" className="h-8 "></img>
+                    </div>
+                   )}
+            </div>
 
    
     </div>

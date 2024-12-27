@@ -39,7 +39,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-4 gap-1">
   
         <button onClick={()=>{
-          alert(`WORKER ADDRESS: ${localStorage.getItem("workerAddress")}`);
+          alert(`WORKER ADDRESS: ${localStorage.getItem('workerAddress')}`);
         }} className="bg-purple-500 hover:bg-purple-600 text-white text-xl px-5 py-3 rounded-md transition">
           WORKER
         </button>

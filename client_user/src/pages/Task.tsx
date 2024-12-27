@@ -23,11 +23,13 @@ interface Task {
 
 const AllTasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch tasks from backend
     const fetchTasks = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/v1/user/taskvotes`, {
           params: {
             address: useUserStore.getState().address,
@@ -38,8 +40,10 @@ const AllTasks: React.FC = () => {
         });
         //  console.log("API Response:", response.data); // Log the response
         setTasks(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching tasks:", error);
+        setLoading(false);
       }
     };
 
@@ -58,7 +62,19 @@ const AllTasks: React.FC = () => {
 
       <div className="max-w-7xl mx-auto p-4">
         <h1 className="text-2xl font-bold text-gray-200 mb-6">Your Tasks</h1>
+        {isLoading ? (
+           <div className="mt-6 w-full flex justify-center">
+           <img
+             src="/assets/loading.svg"
+             alt="Loading..."
+             // className="" // Added mr-2 for spacing if needed
+             style={{ width: "30px", height: "30px" }} // Ensure consistent size
+           />
+         </div>
+        ): (
 
+      <div>
+    
         {tasks.length === 0 ? (
           <p className="text-gray-200 text-center">No tasks available.</p>
         ) : (
@@ -154,6 +170,8 @@ const AllTasks: React.FC = () => {
             })}
           </div>
         )}
+        </div>
+      )}
       </div>
     </div>
   );

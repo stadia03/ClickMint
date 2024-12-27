@@ -131,7 +131,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-900">
       {/* Navbar */}
       <Navbar />
 
@@ -156,13 +156,14 @@ const Home: React.FC = () => {
             id="submissions"
             onChange={(e) => {
               set_total_submissions(parseInt(e.target.value));
+              // console.log((import.meta.env.VITE_CHARGE_PER_CLICK));
             }}
             className="text-black w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600"
           />
           <div className="text-slate-200 flex justify-center mb-2">
             {total_submissions > 0 ? (
               <p>
-                You will be charged {(total_submissions * Number(import.meta.env.VITE_CHARGE_PER_CLICK))/LAMPORTS_PER_SOL} SOL +
+                You will be charged {(total_submissions * (import.meta.env.VITE_CHARGE_PER_CLICK))/LAMPORTS_PER_SOL} SOL +
                 gas fee.
               </p>
             ) : (
@@ -219,7 +220,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Description */}
-      <p className="text-gray-700 text-center mt-8 mx-4 md:mx-auto md:max-w-4xl leading-relaxed">
+      <p className="text-gray-300 text-center mt-8 mx-4 md:mx-auto md:max-w-4xl leading-relaxed">
         ClickMint empowers content creators and data enthusiasts to crowdsource
         valuable insights. Post tasks like thumbnail selection or dataset
         labeling, and let global workers earn micropayments by contributing

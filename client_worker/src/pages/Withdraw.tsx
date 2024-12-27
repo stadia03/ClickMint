@@ -54,7 +54,7 @@ const Withdraw: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center  min-h-screen bg-purple-900 flex-col justify-centre">
+      <div className="flex items-center  min-h-screen bg-gray-900 flex-col justify-centre">
         <div className="w-11/12 max-w-md mt-16 bg-purple-300 rounded-md shadow-lg p-6">
           <p className="text-red-600 text-center text-sm mb-4">
             Funds may be temporarily locked until the transaction is verified.

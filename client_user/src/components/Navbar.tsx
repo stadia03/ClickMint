@@ -31,7 +31,9 @@ const Navbar = () => {
       
       {/* Buttons */}
       <div className="flex items-center space-x-4 gap-2">
-        <button className="bg-purple-500 hover:bg-purple-600 text-white text-xl px-8 py-3 rounded-md transition">
+      <button onClick={()=>{
+          alert(`USER ADDRESS: ${localStorage.getItem("userAddress")}`);
+        }} className="bg-purple-500 hover:bg-purple-600 text-white text-xl px-5 py-3 rounded-md transition">
           USER
         </button>
         <div onClick={handleLogout} className="my-6 bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-purple-800 ">

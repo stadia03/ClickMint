@@ -8,6 +8,7 @@ problems in mind:
 
 BIGGEST PROBLEMMMM OF THE CENTURY: TRANSACTION VALIDATION HAPPENDS FROM POSTMAN BUT NOT FROM BROWSER..... PLEASE FIX
 
+-->Loading while logging
 
 --> (done) check the task status done or not done before WORKER fetches it. 
 
